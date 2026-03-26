@@ -3,7 +3,6 @@ package com.supdevinci.cocktool.ui.composables
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -13,9 +12,11 @@ import androidx.compose.ui.unit.dp
 import com.supdevinci.cocktool.ui.state.CocktailState
 import com.supdevinci.cocktool.viewmodel.CocktailViewModel
 
-
 @Composable
-fun CocktailScreen(viewModel: CocktailViewModel = viewModel()) {
+fun MyCocktailsScreen(
+    modifier: Modifier = Modifier,
+    viewModel: CocktailViewModel = viewModel()
+) {
 
     val state = viewModel.state.collectAsStateWithLifecycle()
 
@@ -23,7 +24,7 @@ fun CocktailScreen(viewModel: CocktailViewModel = viewModel()) {
     var instructions by remember { mutableStateOf("") }
 
     Column(
-        modifier = Modifier
+        modifier = modifier // 🔥 IMPORTANT
             .fillMaxSize()
             .padding(16.dp)
     ) {
@@ -32,7 +33,7 @@ fun CocktailScreen(viewModel: CocktailViewModel = viewModel()) {
         OutlinedTextField(
             value = name,
             onValueChange = { name = it },
-            label = { Text("Nom du cocktail") },
+            label = { Text("Cocktail name") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -41,7 +42,7 @@ fun CocktailScreen(viewModel: CocktailViewModel = viewModel()) {
         OutlinedTextField(
             value = instructions,
             onValueChange = { instructions = it },
-            label = { Text("Recette") },
+            label = { Text("Recipe") },
             modifier = Modifier.fillMaxWidth()
         )
 
@@ -57,7 +58,7 @@ fun CocktailScreen(viewModel: CocktailViewModel = viewModel()) {
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Ajouter")
+            Text("Add")
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -79,14 +80,18 @@ fun CocktailScreen(viewModel: CocktailViewModel = viewModel()) {
                         CocktailItem(
                             cocktail = cocktail,
                             onFavorite = { viewModel.toggleFavorite(cocktail) },
-                            onArchive = { viewModel.archiveCocktail(cocktail.id) }
+                            onArchive = { viewModel.archiveCocktail(cocktail.id) },
+                            onClick = {}
                         )
                     }
                 }
             }
 
             is CocktailState.Error -> {
-                Text(result.message, color = MaterialTheme.colorScheme.error)
+                Text(
+                    result.message,
+                    color = MaterialTheme.colorScheme.error
+                )
             }
         }
     }
