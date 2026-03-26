@@ -43,17 +43,7 @@ class ApiCocktailViewModel : ViewModel() {
         }
     }
 
-    fun getRandomCocktail() {
-        viewModelScope.launch {
-            _state.value = ApiState.Loading
-            try {
-                val response = RetrofitInstance.api.getRandomCocktail()
-                _state.value = ApiState.Success(response.drinks ?: emptyList())
-            } catch (e: Exception) {
-                _state.value = ApiState.Error("Erreur réseau")
-            }
-        }
-    }
+
 
     fun getCocktailsByLetter(letter: String) {
         viewModelScope.launch {

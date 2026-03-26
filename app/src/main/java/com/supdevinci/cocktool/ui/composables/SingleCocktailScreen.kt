@@ -12,7 +12,6 @@ import com.supdevinci.cocktool.model.Drink
 @Composable
 fun SingleCocktailScreen(
     drink: Drink,
-    onBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
 
@@ -21,10 +20,7 @@ fun SingleCocktailScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Button(onClick = onBack) {
-            Text("Back")
-        }
-        // 🖼️ IMAGE
+
         AsyncImage(
             model = drink.strDrinkThumb ?: "https://via.placeholder.com/300",
             contentDescription = drink.strDrink,

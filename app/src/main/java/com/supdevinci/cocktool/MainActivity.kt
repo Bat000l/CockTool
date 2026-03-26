@@ -71,6 +71,7 @@ class MainActivity : ComponentActivity() {
                                 label = { Text("Random") },
                                 selected = false,
                                 onClick = {
+                                    navController.navigate(Routes.RANDOM)
                                     scope.launch { drawerState.close() }
                                 }
                             )

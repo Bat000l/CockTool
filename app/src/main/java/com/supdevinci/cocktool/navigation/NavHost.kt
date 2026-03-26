@@ -6,13 +6,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.supdevinci.cocktool.ui.composables.MainScreen
 import com.supdevinci.cocktool.ui.composables.MyCocktailsScreen
+import com.supdevinci.cocktool.ui.composables.RandomCocktailScreen
 import com.supdevinci.cocktool.ui.composables.SingleCocktailScreen
 import com.supdevinci.cocktool.model.Drink
+import com.supdevinci.cocktool.ui.composables.SplashScreen
 
 object Routes {
     const val MAIN = "main"
     const val MYCOCKTAILS = "mycocktails"
+    const val RANDOM = "random"
     const val DETAIL = "detail"
+    const val SPLASH = "splash"
 }
 
 @Composable
@@ -24,10 +28,13 @@ fun CocktailNavHost(
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.MAIN
+        startDestination = Routes.SPLASH
     ) {
 
-        // 🍸 MAIN (API)
+        // 🎬 SPLASH
+        composable(Routes.SPLASH) {
+            SplashScreen(navController = navController)
+        }
         composable(Routes.MAIN) {
             MainScreen(
                 onCocktailClick = { drink ->
@@ -47,12 +54,16 @@ fun CocktailNavHost(
             )
         }
 
+        // 🎲 RANDOM
+        composable(Routes.RANDOM) {
+            RandomCocktailScreen()
+        }
+
         // 📄 DETAIL
         composable(Routes.DETAIL) {
             selectedDrink?.let {
                 SingleCocktailScreen(
                     drink = it,
-                    onBack = onBack
                 )
             }
         }
