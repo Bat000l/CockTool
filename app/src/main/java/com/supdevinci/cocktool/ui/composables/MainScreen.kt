@@ -88,7 +88,9 @@ fun MainScreen(
                             imageUrl = drink.strDrinkThumb,
                             onFavorite = {},
                             onArchive = {},
-                            onClick = {}
+                            onClick = {
+                                onCocktailClick(drink)
+                            }
                         )
                     }
                 }

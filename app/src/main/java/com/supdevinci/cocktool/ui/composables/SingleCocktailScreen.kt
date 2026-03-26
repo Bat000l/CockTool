@@ -26,7 +26,7 @@ fun SingleCocktailScreen(
         }
         // 🖼️ IMAGE
         AsyncImage(
-            model = drink.strDrinkThumb,
+            model = drink.strDrinkThumb ?: "https://via.placeholder.com/300",
             contentDescription = drink.strDrink,
             modifier = Modifier
                 .fillMaxWidth()

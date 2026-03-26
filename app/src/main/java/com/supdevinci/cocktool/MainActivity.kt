@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
@@ -36,9 +37,6 @@ import androidx.navigation.compose.rememberNavController
 import com.supdevinci.cocktool.model.Drink
 import com.supdevinci.cocktool.navigation.CocktailNavHost
 import com.supdevinci.cocktool.navigation.Routes
-
-import com.supdevinci.cocktool.ui.composables.MainScreen
-import com.supdevinci.cocktool.ui.composables.MyCocktailsScreen
 import com.supdevinci.cocktool.ui.theme.CockToolTheme
 import kotlinx.coroutines.launch
 
@@ -124,19 +122,19 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                     ) { padding ->
-
-                        // 👉 TON ÉCRAN ICI
-
-                        CocktailNavHost(
-                            navController = navController,
-                            selectedDrink = selectedDrink,
-                            onDrinkSelected = { selectedDrink = it },
-                            onBack = {
-                                navController.popBackStack()
-                            }
-                        )
-
+                        Box(modifier = Modifier.padding(padding)) {
+                            CocktailNavHost(
+                                navController = navController,
+                                selectedDrink = selectedDrink,
+                                onDrinkSelected = { selectedDrink = it },
+                                onBack = {
+                                    navController.popBackStack()
+                                }
+                            )
+                        }
+                    }
+                }
             }
         }
     }
-}}}
+}

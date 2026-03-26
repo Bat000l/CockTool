@@ -15,7 +15,9 @@ import com.supdevinci.cocktool.viewmodel.CocktailViewModel
 @Composable
 fun MyCocktailsScreen(
     modifier: Modifier = Modifier,
-    viewModel: CocktailViewModel = viewModel()
+    viewModel: CocktailViewModel = viewModel(),
+    onCocktailClick: (String, String) -> Unit = { _, _ -> }
+
 ) {
 
     val state = viewModel.state.collectAsStateWithLifecycle()
@@ -81,7 +83,9 @@ fun MyCocktailsScreen(
                             cocktail = cocktail,
                             onFavorite = { viewModel.toggleFavorite(cocktail) },
                             onArchive = { viewModel.archiveCocktail(cocktail.id) },
-                            onClick = {}
+                            onClick = {
+                                onCocktailClick(cocktail.name, cocktail.instructions)
+                            }
                         )
                     }
                 }
