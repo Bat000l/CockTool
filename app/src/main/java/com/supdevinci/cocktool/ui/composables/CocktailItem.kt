@@ -43,7 +43,6 @@ fun CocktailItem(
 
         Column {
 
-            // 🖼️ IMAGE (Si présente)
             if (imageUrl != null) {
                 AsyncImage(
                     model = imageUrl,
@@ -56,7 +55,7 @@ fun CocktailItem(
 
             Column(modifier = Modifier.padding(12.dp)) {
 
-                // 🏷️ NOM
+
                 Text(
                     text = cocktail.name,
                     style = MaterialTheme.typography.titleLarge,
@@ -65,7 +64,6 @@ fun CocktailItem(
 
                 Spacer(modifier = Modifier.height(4.dp))
 
-                // 📖 DESCRIPTION
                 Text(
                     text = cocktail.instructions,
                     maxLines = 2,
@@ -75,7 +73,7 @@ fun CocktailItem(
 
                 Spacer(modifier = Modifier.height(6.dp))
 
-                // 📅 DATE
+
                 Text(
                     text = "Créé le : ${formatter.format(cocktail.createdAt)}",
                     style = MaterialTheme.typography.bodySmall,
@@ -84,13 +82,11 @@ fun CocktailItem(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // 🔘 ACTIONS
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
 
-                    // ⭐ FAVORI
                     IconButton(onClick = onFavorite) {
                         Icon(
                             imageVector = if (cocktail.isFavorite)
@@ -105,7 +101,6 @@ fun CocktailItem(
                         )
                     }
 
-                    // 🗑️ ARCHIVE (Optionnel)
                     if (showArchiveButton) {
                         IconButton(onClick = onArchive) {
                             Icon(

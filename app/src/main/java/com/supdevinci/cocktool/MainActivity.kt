@@ -145,7 +145,6 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     } else {
-                        // Sur SPLASH, afficher juste le NavHost sans TopBar
                         CocktailNavHost(
                             navController = navController,
                             selectedDrink = selectedDrink,

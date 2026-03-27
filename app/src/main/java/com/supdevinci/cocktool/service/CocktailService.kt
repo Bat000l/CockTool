@@ -14,10 +14,6 @@ interface CocktailService {
     @GET("random.php")
     suspend fun getRandomCocktail(): CocktailResponse
 
-    @GET("search.php")
-    suspend fun getCocktailsByLetter(
-        @Query("f") letter: String
-    ): CocktailResponse
 
     @GET("randomselection.php")
     suspend fun getRandomSelection(): CocktailResponse

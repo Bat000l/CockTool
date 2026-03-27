@@ -25,7 +25,6 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
         observeFavorites()
     }
 
-    // 👁️ OBSERVER LES FAVORIS
     private fun observeFavorites() {
         viewModelScope.launch {
             dao.getFavoriteCocktails().collect { cocktails ->
@@ -38,7 +37,6 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    // ⭐ SUPPRIMER DES FAVORIS / TOGGLE FAVORI
     fun toggleFavorite(cocktail: CocktailEntity) {
         viewModelScope.launch {
             val updated = cocktail.copy(
@@ -63,8 +61,6 @@ class FavoritesViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
 
-// ...existing code...
-    // ➕ AJOUTER UN COCKTAIL AUX FAVORIS
     fun addFavorite(drink: Drink) {
         viewModelScope.launch {
             val cocktail = CocktailEntity(

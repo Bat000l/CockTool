@@ -18,7 +18,6 @@ import com.supdevinci.cocktool.model.Drink
 import com.supdevinci.cocktool.ui.composables.SplashScreen
 import com.supdevinci.cocktool.viewmodel.FavoritesViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.supdevinci.cocktool.viewmodel.CocktailViewModel
 import com.supdevinci.cocktool.data.local.entities.CocktailEntity
 
 object Routes {
@@ -42,7 +41,6 @@ fun CocktailNavHost(
         startDestination = Routes.SPLASH
     ) {
 
-        // 🎬 SPLASH
         composable(Routes.SPLASH) {
             SplashScreen(navController = navController)
         }
@@ -55,7 +53,6 @@ fun CocktailNavHost(
             )
         }
 
-        // ❤️ LOCAL (ROOM)
         composable(Routes.MYCOCKTAILS) {
             MyCocktailsScreen(
                 onCocktailClick = { name, instructions ->
@@ -65,7 +62,6 @@ fun CocktailNavHost(
             )
         }
 
-        // ⭐ FAVORIS
         composable(Routes.MYFAVORITES) {
             MyFavoritesScreen(
                 onCocktailClick = { cocktail ->
@@ -75,12 +71,10 @@ fun CocktailNavHost(
             )
         }
 
-        // 🎲 RANDOM
         composable(Routes.RANDOM) {
             RandomCocktailScreen()
         }
 
-        // 📄 DETAIL
         composable(Routes.DETAIL) {
             selectedDrink?.let { drink ->
                 val favoritesViewModel: FavoritesViewModel = viewModel()

@@ -24,7 +24,6 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
         observeCocktails()
     }
 
-    // 👀 OBSERVER LA DB
     private fun observeCocktails() {
         viewModelScope.launch {
             dao.getAllVisibleCocktails().collect { cocktails ->
@@ -37,7 +36,6 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
         }
     }
 
-    // ➕ AJOUTER
     fun addCocktail(name: String, instructions: String) {
         viewModelScope.launch {
             val cocktail = CocktailEntity(
@@ -59,7 +57,6 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
     }
 
 
-    // 🗑️ ARCHIVE
     fun archiveCocktail(id: Int) {
         viewModelScope.launch {
             dao.softDelete(id, Date())

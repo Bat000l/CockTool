@@ -26,14 +26,11 @@ fun MyFavoritesScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        // 📋 TITRE
         Text(
             text = "Mes Favoris ⭐",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )
-
-        // 📊 ÉTAT DE LA UI
         when (val result = state.value) {
 
             is CocktailState.Loading -> {

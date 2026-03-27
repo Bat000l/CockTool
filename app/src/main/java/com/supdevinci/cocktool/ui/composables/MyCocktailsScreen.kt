@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.supdevinci.cocktool.ui.state.CocktailState
 import com.supdevinci.cocktool.viewmodel.CocktailViewModel
-import com.supdevinci.cocktool.viewmodel.FavoritesViewModel
+
 
 
 @Composable
@@ -34,7 +34,6 @@ fun MyCocktailsScreen(
             .padding(16.dp)
     ) {
 
-        // 🧾 FORMULAIRE
         OutlinedTextField(
             value = name,
             onValueChange = { name = it },
@@ -68,7 +67,6 @@ fun MyCocktailsScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 📊 ÉTAT
         when (val result = state.value) {
 
             is CocktailState.Loading -> {

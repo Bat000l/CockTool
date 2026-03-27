@@ -32,7 +32,7 @@ fun SingleCocktailScreen(
             .padding(16.dp)
     ) {
 
-        // 🖼️ IMAGE PRINCIPALE
+
         AsyncImage(
             model = drink.strDrinkThumb ?: "https://via.placeholder.com/300",
             contentDescription = drink.strDrink,
@@ -44,7 +44,7 @@ fun SingleCocktailScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // 🍸 NOM + BOUTON FAVORI
+
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -79,7 +79,7 @@ fun SingleCocktailScreen(
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 📖 INSTRUCTIONS
+
         Card(
             modifier = Modifier.fillMaxWidth(),
             colors = CardDefaults.cardColors(
@@ -103,7 +103,6 @@ fun SingleCocktailScreen(
 
         Spacer(modifier = Modifier.height(20.dp))
 
-        // 🍹 INGREDIENTS
         Text(
             text = "Ingrédients",
             style = MaterialTheme.typography.titleMedium,

@@ -33,7 +33,6 @@ fun RandomCocktailScreen(
     val state = viewModel.state.collectAsStateWithLifecycle()
     val favoritesState by favoritesViewModel.state.collectAsStateWithLifecycle()
 
-    // Charger un cocktail aléatoire au démarrage
     LaunchedEffect(Unit) {
         viewModel.getRandomCocktail()
     }
