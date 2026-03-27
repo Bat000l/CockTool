@@ -34,6 +34,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.supdevinci.cocktool.model.Drink
 import com.supdevinci.cocktool.navigation.CocktailNavHost
 import com.supdevinci.cocktool.navigation.Routes
@@ -96,43 +97,60 @@ class MainActivity : ComponentActivity() {
                     }
                 ) {
 
-                    Scaffold(
-                        topBar = {
-                            TopAppBar(
-                                title = {
-                                    Row(verticalAlignment = Alignment.CenterVertically) {
 
-                                        Image(
-                                            painter = painterResource(id = R.drawable.logo_cocktool),
-                                            contentDescription = "Logo",
-                                            modifier = Modifier.size(50.dp)
-                                        )
+                    val navBackStackEntry by navController.currentBackStackEntryAsState()
+                    val currentRoute = navBackStackEntry?.destination?.route
 
-                                        Spacer(modifier = Modifier.width(8.dp))
 
-                                        Text("CockTool")
+                    if (currentRoute != Routes.SPLASH) {
+                        Scaffold(
+                            topBar = {
+                                TopAppBar(
+                                    title = {
+                                        Row(verticalAlignment = Alignment.CenterVertically) {
+
+                                            Image(
+                                                painter = painterResource(id = R.drawable.logo_cocktool),
+                                                contentDescription = "Logo",
+                                                modifier = Modifier.size(50.dp)
+                                            )
+
+                                            Spacer(modifier = Modifier.width(8.dp))
+
+                                            Text("CockTool")
+                                        }
+                                    },
+                                    actions = {
+                                        IconButton(onClick = {
+                                            scope.launch { drawerState.open() }
+                                        }) {
+                                            Icon(Icons.Default.Menu, contentDescription = "Menu")
+                                        }
                                     }
-                                },
-                                actions = {
-                                    IconButton(onClick = {
-                                        scope.launch { drawerState.open() }
-                                    }) {
-                                        Icon(Icons.Default.Menu, contentDescription = "Menu")
+                                )
+                            }
+                        ) { padding ->
+                            Box(modifier = Modifier.padding(padding)) {
+                                CocktailNavHost(
+                                    navController = navController,
+                                    selectedDrink = selectedDrink,
+                                    onDrinkSelected = { selectedDrink = it },
+                                    onBack = {
+                                        navController.popBackStack()
                                     }
-                                }
-                            )
+                                )
+                            }
                         }
-                    ) { padding ->
-                        Box(modifier = Modifier.padding(padding)) {
-                            CocktailNavHost(
-                                navController = navController,
-                                selectedDrink = selectedDrink,
-                                onDrinkSelected = { selectedDrink = it },
-                                onBack = {
-                                    navController.popBackStack()
-                                }
-                            )
-                        }
+                    } else {
+                        // Sur SPLASH, afficher juste le NavHost sans TopBar
+                        CocktailNavHost(
+                            navController = navController,
+                            selectedDrink = selectedDrink,
+                            onDrinkSelected = { selectedDrink = it },
+                            onBack = {
+                                navController.popBackStack()
+                            }
+                        )
                     }
                 }
             }
