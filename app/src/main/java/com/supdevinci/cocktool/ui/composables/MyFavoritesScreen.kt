@@ -27,7 +27,7 @@ fun MyFavoritesScreen(
             .padding(16.dp)
     ) {
         Text(
-            text = "Mes Favoris ⭐",
+            text = "My Favorites",
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )
@@ -43,7 +43,7 @@ fun MyFavoritesScreen(
 
             is CocktailState.Empty -> {
                 Text(
-                    text = "Aucun cocktail en favoris...",
+                    text = "No favorite cocktail",
                     style = MaterialTheme.typography.bodyLarge,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(vertical = 32.dp)

@@ -81,7 +81,7 @@ fun CocktailItem(
                                 Icons.Default.Favorite
                             else
                                 Icons.Default.FavoriteBorder,
-                            contentDescription = "Favori",
+                            contentDescription = "Favorite",
                             tint = if (cocktail.isFavorite)
                                 MaterialTheme.colorScheme.primary
                             else

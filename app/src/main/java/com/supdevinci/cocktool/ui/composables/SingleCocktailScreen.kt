@@ -88,13 +88,13 @@ fun SingleCocktailScreen(
         ) {
             Column(modifier = Modifier.padding(14.dp)) {
                 Text(
-                    text = "Préparation",
+                    text = "Recipe",
                     style = MaterialTheme.typography.titleMedium,
                     color = MaterialTheme.colorScheme.primary
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = drink.strInstructions ?: "Pas d'instructions",
+                    text = drink.strInstructions ?: "No recipe",
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurface
                 )
@@ -104,7 +104,7 @@ fun SingleCocktailScreen(
         Spacer(modifier = Modifier.height(20.dp))
 
         Text(
-            text = "Ingrédients",
+            text = "Ingredients",
             style = MaterialTheme.typography.titleMedium,
             color = MaterialTheme.colorScheme.primary
         )
