@@ -105,7 +105,8 @@ fun MainScreen(
                             onArchive = {},
                             onClick = {
                                 onCocktailClick(drink)
-                            }
+                            },
+                            showArchiveButton = false
                         )
                     }
                 }

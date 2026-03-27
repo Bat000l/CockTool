@@ -20,7 +20,8 @@ fun CocktailItem(
     imageUrl: String? = null,
     onFavorite: () -> Unit,
     onArchive: () -> Unit,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    showArchiveButton: Boolean = true
 ) {
 
     val formatter = remember {
@@ -33,7 +34,11 @@ fun CocktailItem(
             .fillMaxWidth()
             .padding(vertical = 6.dp),
         shape = MaterialTheme.shapes.extraLarge,
-        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        )
     ) {
 
         Column {
@@ -54,7 +59,8 @@ fun CocktailItem(
                 // 🏷️ NOM
                 Text(
                     text = cocktail.name,
-                    style = MaterialTheme.typography.titleLarge
+                    style = MaterialTheme.typography.titleLarge,
+                    color = MaterialTheme.colorScheme.primary
                 )
 
                 Spacer(modifier = Modifier.height(4.dp))
@@ -63,7 +69,8 @@ fun CocktailItem(
                 Text(
                     text = cocktail.instructions,
                     maxLines = 2,
-                    style = MaterialTheme.typography.bodyMedium
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface
                 )
 
                 Spacer(modifier = Modifier.height(6.dp))
@@ -71,7 +78,8 @@ fun CocktailItem(
                 // 📅 DATE
                 Text(
                     text = "Créé le : ${formatter.format(cocktail.createdAt)}",
-                    style = MaterialTheme.typography.bodySmall
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -93,17 +101,19 @@ fun CocktailItem(
                             tint = if (cocktail.isFavorite)
                                 MaterialTheme.colorScheme.primary
                             else
-                                MaterialTheme.colorScheme.onSurface
+                                MaterialTheme.colorScheme.secondary
                         )
                     }
 
-                    // 🗑️ ARCHIVE
-                    IconButton(onClick = onArchive) {
-                        Icon(
-                            Icons.Default.Delete,
-                            contentDescription = "Archiver",
-                            tint = MaterialTheme.colorScheme.error
-                        )
+                    // 🗑️ ARCHIVE (Optionnel)
+                    if (showArchiveButton) {
+                        IconButton(onClick = onArchive) {
+                            Icon(
+                                Icons.Default.Delete,
+                                contentDescription = "Archiver",
+                                tint = MaterialTheme.colorScheme.error
+                            )
+                        }
                     }
                 }
             }

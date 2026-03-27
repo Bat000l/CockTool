@@ -2,12 +2,17 @@ package com.supdevinci.cocktool.ui.composables
 
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.supdevinci.cocktool.model.Drink
@@ -23,24 +28,40 @@ fun SingleCocktailScreen(
     Column(
         modifier = modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
 
+        // 🖼️ IMAGE PRINCIPALE
         AsyncImage(
             model = drink.strDrinkThumb ?: "https://via.placeholder.com/300",
             contentDescription = drink.strDrink,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(250.dp)
+                .height(280.dp)
+                .clip(RoundedCornerShape(16.dp))
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End
-        ) {
+        Spacer(modifier = Modifier.height(20.dp))
 
-            IconButton(onClick = ToggleFavorite) {
+        // 🍸 NOM + BOUTON FAVORI
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = drink.strDrink,
+                style = MaterialTheme.typography.headlineMedium,
+                color = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.weight(1f)
+            )
+
+            IconButton(
+                onClick = ToggleFavorite,
+                modifier = Modifier.size(48.dp)
+            ) {
                 Icon(
                     imageVector = if (isFavorite)
                         Icons.Default.Favorite
@@ -50,31 +71,46 @@ fun SingleCocktailScreen(
                     tint = if (isFavorite)
                         MaterialTheme.colorScheme.primary
                     else
-                        MaterialTheme.colorScheme.onSurface
+                        MaterialTheme.colorScheme.secondary,
+                    modifier = Modifier.size(28.dp)
                 )
             }
         }
-        // 🍸 NOM
-        Text(
-            text = drink.strDrink,
-            style = MaterialTheme.typography.headlineMedium
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // 📖 INSTRUCTIONS
-        Text(
-            text = drink.strInstructions ?: "Pas d'instructions",
-            style = MaterialTheme.typography.bodyLarge
-        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        // 🍹 INGREDIENTS (simple version)
+        // 📖 INSTRUCTIONS
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            )
+        ) {
+            Column(modifier = Modifier.padding(14.dp)) {
+                Text(
+                    text = "Préparation",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = drink.strInstructions ?: "Pas d'instructions",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        // 🍹 INGREDIENTS
         Text(
             text = "Ingrédients",
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
+            color = MaterialTheme.colorScheme.primary
         )
+
+        Spacer(modifier = Modifier.height(12.dp))
 
         val ingredients = listOfNotNull(
             if(!drink.strIngredient1.isNullOrEmpty()) drink.strIngredient1 to drink.strMeasure1 else null,
@@ -95,11 +131,35 @@ fun SingleCocktailScreen(
         )
 
         ingredients.forEach { (ingredient, measure) ->
-            Text(
-                text = "• $ingredient${measure?.let { " - $it" } ?: ""}",
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.padding(start = 8.dp, top = 4.dp)
-            )
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 6.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "•",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Column {
+                    Text(
+                        text = ingredient,
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                    if (measure != null) {
+                        Text(
+                            text = measure,
+                            style = MaterialTheme.typography.labelSmall,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                        )
+                    }
+                }
+            }
         }
+
+        Spacer(modifier = Modifier.height(20.dp))
     }
 }

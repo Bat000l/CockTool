@@ -1,54 +1,76 @@
 package com.supdevinci.cocktool.ui.theme
 
-import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
-import androidx.compose.material3.dynamicDarkColorScheme
-import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.graphics.Color
 
+// 🍹 THÈME SOMBRE (CockTail Bar Night)
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = WarmOrange80,              // Orange clair principal
+    onPrimary = DarkBackground,          // Texte sombre sur orange
+    primaryContainer = WarmOrange40,     // Container orange foncé
+    onPrimaryContainer = WarmOrange80,
+    
+    secondary = WarmRust80,              // Rust/Terracotta clair
+    onSecondary = DarkBackground,
+    secondaryContainer = WarmRust40,
+    onSecondaryContainer = WarmRust80,
+    
+    tertiary = WarmOrange80,             // Même que primaire pour cohérence
+    onTertiary = DarkBackground,
+    tertiaryContainer = WarmOrange40,
+    onTertiaryContainer = WarmOrange80,
+    
+    error = Color(0xFFFF6B6B),
+    errorContainer = Color(0xFFFFEBEE),
+    onError = DarkBackground,
+    
+    background = DarkBackground,
+    onBackground = TextLight,
+    surface = DarkSurface,
+    onSurface = TextLight,
+    surfaceVariant = Color(0xFF3D3430),
+    onSurfaceVariant = TextLight
 )
 
+// 🍸 THÈME CLAIR (CockTail Bar Day)
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary = WarmOrange40,              // Orange foncé principal
+    onPrimary = Color(0xFFFFFFFF),       // Texte blanc sur orange
+    primaryContainer = WarmOrange80,     // Container orange clair
+    onPrimaryContainer = WarmOrange40,
+    
+    secondary = WarmRust40,              // Rust foncé secondaire
+    onSecondary = Color(0xFFFFFFFF),
+    secondaryContainer = WarmRust80,
+    onSecondaryContainer = WarmRust40,
+    
+    tertiary = WarmOrange40,             // Même que primaire pour cohérence
+    onTertiary = Color(0xFFFFFFFF),
+    tertiaryContainer = WarmOrange80,
+    onTertiaryContainer = WarmOrange40,
+    
+    error = Color(0xFFDC2626),
+    errorContainer = Color(0xFFFFEBEE),
+    onError = Color(0xFFFFFFFF),
+    
+    background = LightBackground,
+    onBackground = TextDark,
+    surface = LightSurface,
+    onSurface = TextDark,
+    surfaceVariant = Color(0xFFEEE0D0),
+    onSurfaceVariant = TextDark
 )
 
 @Composable
 fun CockToolTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
+    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
 
     MaterialTheme(
         colorScheme = colorScheme,
