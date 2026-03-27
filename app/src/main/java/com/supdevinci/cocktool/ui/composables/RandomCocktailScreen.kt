@@ -12,12 +12,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.supdevinci.cocktool.ui.state.ApiState
+import com.supdevinci.cocktool.ui.state.CocktailState
+import com.supdevinci.cocktool.viewmodel.FavoritesViewModel
 import com.supdevinci.cocktool.viewmodel.RandomCocktailViewModel
 
 
@@ -25,8 +28,10 @@ import com.supdevinci.cocktool.viewmodel.RandomCocktailViewModel
 fun RandomCocktailScreen(
     modifier: Modifier = Modifier,
     viewModel: RandomCocktailViewModel = viewModel(),
+    favoritesViewModel: FavoritesViewModel = viewModel()
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
+    val favoritesState by favoritesViewModel.state.collectAsStateWithLifecycle()
 
     // Charger un cocktail aléatoire au démarrage
     LaunchedEffect(Unit) {
@@ -49,13 +54,25 @@ fun RandomCocktailScreen(
             is ApiState.Success -> {
                 val drink = apiState.drinks.firstOrNull()
                 if (drink != null) {
+                    val isFav = if (favoritesState is CocktailState.Success) {
+                        (favoritesState as CocktailState.Success).cocktails.any { it.name == drink.strDrink && it.isFavorite }
+                    } else {
+                        false
+                    }
+
                     SingleCocktailScreen(
                         drink = drink,
                         modifier = Modifier
                             .weight(1f)
                             .padding(16.dp),
-                        isFavorite = false,
-                        ToggleFavorite = {}
+                        isFavorite = isFav,
+                        ToggleFavorite = {
+                            if (isFav) {
+                                favoritesViewModel.removeFavoriteByName(drink.strDrink)
+                            } else {
+                                favoritesViewModel.addFavorite(drink)
+                            }
+                        }
                     )
                 } else {
                     Box(

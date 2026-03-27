@@ -32,18 +32,18 @@ import com.supdevinci.cocktool.data.local.entities.CocktailEntity
 import com.supdevinci.cocktool.model.Drink
 import com.supdevinci.cocktool.ui.state.ApiState
 import com.supdevinci.cocktool.viewmodel.ApiCocktailViewModel
-import com.supdevinci.cocktool.viewmodel.CocktailViewModel
 import java.util.Date
 import com.supdevinci.cocktool.viewmodel.FavoritesViewModel
+import com.supdevinci.cocktool.ui.state.CocktailState
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
     viewModel: ApiCocktailViewModel = viewModel(),
-
     favoritesViewModel: FavoritesViewModel = viewModel(),
     onCocktailClick: (Drink) -> Unit
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
+    val favoritesState by favoritesViewModel.state.collectAsStateWithLifecycle()
     var searchText by remember { mutableStateOf("") }
 
     Column(
@@ -81,15 +81,27 @@ fun MainScreen(
             is ApiState.Success -> {
                 LazyColumn {
                     items(result.drinks) { drink ->
+                        val isFav = if (favoritesState is CocktailState.Success) {
+                            (favoritesState as CocktailState.Success).cocktails.any { it.name == drink.strDrink && it.isFavorite }
+                        } else {
+                            false
+                        }
+                        
                         CocktailItem(
                             cocktail = CocktailEntity(
                                 name = drink.strDrink,
                                 instructions = drink.strInstructions ?: "",
-                                isFavorite = false,
+                                isFavorite = isFav,
                                 createdAt = Date()
                             ),
                             imageUrl = drink.strDrinkThumb,
-                            onFavorite = { favoritesViewModel.addFavorite(drink) },
+                            onFavorite = { 
+                                if (isFav) {
+                                    favoritesViewModel.removeFavoriteByName(drink.strDrink)
+                                } else {
+                                    favoritesViewModel.addFavorite(drink) 
+                                }
+                            },
                             onArchive = {},
                             onClick = {
                                 onCocktailClick(drink)
