@@ -38,14 +38,16 @@ fun CocktailItem(
 
         Column {
 
-            // 🖼️ IMAGE
-            AsyncImage(
-                model = imageUrl ?: "https://via.placeholder.com/300",
-                contentDescription = cocktail.name,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(180.dp)
-            )
+            // 🖼️ IMAGE (Si présente)
+            if (imageUrl != null) {
+                AsyncImage(
+                    model = imageUrl,
+                    contentDescription = cocktail.name,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(180.dp)
+                )
+            }
 
             Column(modifier = Modifier.padding(12.dp)) {
 

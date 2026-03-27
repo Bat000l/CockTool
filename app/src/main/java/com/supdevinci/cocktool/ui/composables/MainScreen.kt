@@ -34,12 +34,13 @@ import com.supdevinci.cocktool.ui.state.ApiState
 import com.supdevinci.cocktool.viewmodel.ApiCocktailViewModel
 import com.supdevinci.cocktool.viewmodel.CocktailViewModel
 import java.util.Date
-
+import com.supdevinci.cocktool.viewmodel.FavoritesViewModel
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
     viewModel: ApiCocktailViewModel = viewModel(),
-    cocktailViewModel: CocktailViewModel = viewModel(),
+
+    favoritesViewModel: FavoritesViewModel = viewModel(),
     onCocktailClick: (Drink) -> Unit
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
@@ -80,18 +81,16 @@ fun MainScreen(
             is ApiState.Success -> {
                 LazyColumn {
                     items(result.drinks) { drink ->
-                        // Créer une entité CocktailEntity à partir du Drink
-                        val cocktailEntity = CocktailEntity(
-                            name = drink.strDrink,
-                            instructions = drink.strInstructions ?: "",
-                            createdAt = Date()
-                        )
-                        
                         CocktailItem(
-                            cocktail = cocktailEntity,
+                            cocktail = CocktailEntity(
+                                name = drink.strDrink,
+                                instructions = drink.strInstructions ?: "",
+                                isFavorite = false,
+                                createdAt = Date()
+                            ),
                             imageUrl = drink.strDrinkThumb,
-                            onFavorite = { cocktailViewModel.toggleFavorite(cocktailEntity) },
-                            onArchive = { cocktailViewModel.archiveCocktail(cocktailEntity.id) },
+                            onFavorite = { favoritesViewModel.addFavorite(drink) },
+                            onArchive = {},
                             onClick = {
                                 onCocktailClick(drink)
                             }

@@ -95,13 +95,7 @@ class MainActivity : ComponentActivity() {
                                 }
                             )
 
-                            NavigationDrawerItem(
-                                label = { Text("Encyclopedia") },
-                                selected = false,
-                                onClick = {
-                                    scope.launch { drawerState.close() }
-                                }
-                            )
+
                         }
                     }
                 ) {

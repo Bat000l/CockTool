@@ -53,7 +53,9 @@ fun RandomCocktailScreen(
                         drink = drink,
                         modifier = Modifier
                             .weight(1f)
-                            .padding(16.dp)
+                            .padding(16.dp),
+                        isFavorite = false,
+                        ToggleFavorite = {}
                     )
                 } else {
                     Box(

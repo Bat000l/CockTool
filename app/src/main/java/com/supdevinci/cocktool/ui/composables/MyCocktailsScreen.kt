@@ -11,11 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.supdevinci.cocktool.ui.state.CocktailState
 import com.supdevinci.cocktool.viewmodel.CocktailViewModel
+import com.supdevinci.cocktool.viewmodel.FavoritesViewModel
+
 
 @Composable
 fun MyCocktailsScreen(
     modifier: Modifier = Modifier,
     viewModel: CocktailViewModel = viewModel(),
+
     onCocktailClick: (String, String) -> Unit = { _, _ -> }
 
 ) {

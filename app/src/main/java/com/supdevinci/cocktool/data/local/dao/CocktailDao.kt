@@ -26,4 +26,7 @@ interface CocktailDao {
 
     @Query("SELECT * FROM my_cocktails WHERE isFavorite = 1 AND deletedAt IS NULL")
     fun getFavoriteCocktails(): Flow<List<CocktailEntity>>
+
+    @Query("DELETE FROM my_cocktails WHERE name = :name AND isFavorite = 1")
+    suspend fun removeFavoriteByName(name: String)
 }

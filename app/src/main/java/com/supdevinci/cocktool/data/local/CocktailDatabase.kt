@@ -11,7 +11,7 @@ import com.supdevinci.cocktool.data.local.entities.CocktailEntity
 
 @Database(
     entities = [CocktailEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -29,7 +29,9 @@ abstract class CocktailDatabase : RoomDatabase() {
                     context.applicationContext,
                     CocktailDatabase::class.java,
                     "cocktail_database"
-                ).build()
+                )
+                .fallbackToDestructiveMigration()
+                .build()
 
                 INSTANCE = instance
                 instance

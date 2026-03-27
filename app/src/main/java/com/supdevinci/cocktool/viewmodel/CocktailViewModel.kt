@@ -48,8 +48,6 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
             dao.insert(cocktail)
         }
     }
-
-    // ⭐ FAVORI
     fun toggleFavorite(cocktail: CocktailEntity) {
         viewModelScope.launch {
             val updated = cocktail.copy(
@@ -59,6 +57,7 @@ class CocktailViewModel(application: Application) : AndroidViewModel(application
             dao.update(updated)
         }
     }
+
 
     // 🗑️ ARCHIVE
     fun archiveCocktail(id: Int) {

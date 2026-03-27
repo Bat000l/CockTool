@@ -2,6 +2,9 @@ package com.supdevinci.cocktool.ui.composables
 
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -12,7 +15,9 @@ import com.supdevinci.cocktool.model.Drink
 @Composable
 fun SingleCocktailScreen(
     drink: Drink,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    isFavorite: Boolean,
+    ToggleFavorite: () -> Unit,
 ) {
 
     Column(
@@ -30,10 +35,28 @@ fun SingleCocktailScreen(
         )
 
         Spacer(modifier = Modifier.height(16.dp))
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.End
+        ) {
 
+            IconButton(onClick = ToggleFavorite) {
+                Icon(
+                    imageVector = if (isFavorite)
+                        Icons.Default.Favorite
+                    else
+                        Icons.Default.FavoriteBorder,
+                    contentDescription = "Favori",
+                    tint = if (isFavorite)
+                        MaterialTheme.colorScheme.primary
+                    else
+                        MaterialTheme.colorScheme.onSurface
+                )
+            }
+        }
         // 🍸 NOM
         Text(
-            text = drink.strDrink ?: "Sans nom",
+            text = drink.strDrink,
             style = MaterialTheme.typography.headlineMedium
         )
 
@@ -53,16 +76,30 @@ fun SingleCocktailScreen(
             style = MaterialTheme.typography.titleMedium
         )
 
-        val ingredients = listOf(
-            drink.strIngredient1,
-            drink.strIngredient2,
-            drink.strIngredient3,
-            drink.strIngredient4,
-            drink.strIngredient5
-        ).filterNotNull()
+        val ingredients = listOfNotNull(
+            if(!drink.strIngredient1.isNullOrEmpty()) drink.strIngredient1 to drink.strMeasure1 else null,
+            if(!drink.strIngredient2.isNullOrEmpty()) drink.strIngredient2 to drink.strMeasure2 else null,
+            if(!drink.strIngredient3.isNullOrEmpty()) drink.strIngredient3 to drink.strMeasure3 else null,
+            if(!drink.strIngredient4.isNullOrEmpty()) drink.strIngredient4 to drink.strMeasure4 else null,
+            if(!drink.strIngredient5.isNullOrEmpty()) drink.strIngredient5 to drink.strMeasure5 else null,
+            if(!drink.strIngredient6.isNullOrEmpty()) drink.strIngredient6 to drink.strMeasure6 else null,
+            if(!drink.strIngredient7.isNullOrEmpty()) drink.strIngredient7 to drink.strMeasure7 else null,
+            if(!drink.strIngredient8.isNullOrEmpty()) drink.strIngredient8 to drink.strMeasure8 else null,
+            if(!drink.strIngredient9.isNullOrEmpty()) drink.strIngredient9 to drink.strMeasure9 else null,
+            if(!drink.strIngredient10.isNullOrEmpty()) drink.strIngredient10 to drink.strMeasure10 else null,
+            if(!drink.strIngredient11.isNullOrEmpty()) drink.strIngredient11 to drink.strMeasure11 else null,
+            if(!drink.strIngredient12.isNullOrEmpty()) drink.strIngredient12 to drink.strMeasure12 else null,
+            if(!drink.strIngredient13.isNullOrEmpty()) drink.strIngredient13 to drink.strMeasure13 else null,
+            if(!drink.strIngredient14.isNullOrEmpty()) drink.strIngredient14 to drink.strMeasure14 else null,
+            if(!drink.strIngredient15.isNullOrEmpty()) drink.strIngredient15 to drink.strMeasure15 else null,
+        )
 
-        ingredients.forEach {
-            Text("• $it")
+        ingredients.forEach { (ingredient, measure) ->
+            Text(
+                text = "• $ingredient${measure?.let { " - $it" } ?: ""}",
+                style = MaterialTheme.typography.bodyMedium,
+                modifier = Modifier.padding(start = 8.dp, top = 4.dp)
+            )
         }
     }
 }
