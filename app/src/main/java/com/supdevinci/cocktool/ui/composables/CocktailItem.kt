@@ -11,8 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.supdevinci.cocktool.data.local.entities.CocktailEntity
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 @Composable
 fun CocktailItem(
@@ -23,10 +21,6 @@ fun CocktailItem(
     onClick: () -> Unit,
     showArchiveButton: Boolean = true
 ) {
-
-    val formatter = remember {
-        SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
-    }
 
     Card(
         onClick = onClick,
@@ -72,13 +66,7 @@ fun CocktailItem(
                 )
 
                 Spacer(modifier = Modifier.height(6.dp))
-
-
-                Text(
-                    text = "Créé le : ${formatter.format(cocktail.createdAt)}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
+                Spacer(modifier = Modifier.height(6.dp))
 
                 Spacer(modifier = Modifier.height(8.dp))
 
