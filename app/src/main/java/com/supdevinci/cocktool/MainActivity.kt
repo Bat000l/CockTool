@@ -87,6 +87,15 @@ class MainActivity : ComponentActivity() {
                             )
 
                             NavigationDrawerItem(
+                                label = { Text("My Favorites") },
+                                selected = false,
+                                onClick = {
+                                    navController.navigate(Routes.MYFAVORITES)
+                                    scope.launch { drawerState.close() }
+                                }
+                            )
+
+                            NavigationDrawerItem(
                                 label = { Text("Encyclopedia") },
                                 selected = false,
                                 onClick = {

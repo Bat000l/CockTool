@@ -32,14 +32,15 @@ import com.supdevinci.cocktool.data.local.entities.CocktailEntity
 import com.supdevinci.cocktool.model.Drink
 import com.supdevinci.cocktool.ui.state.ApiState
 import com.supdevinci.cocktool.viewmodel.ApiCocktailViewModel
+import com.supdevinci.cocktool.viewmodel.CocktailViewModel
 import java.util.Date
 
 @Composable
 fun MainScreen(
     modifier: Modifier = Modifier,
     viewModel: ApiCocktailViewModel = viewModel(),
+    cocktailViewModel: CocktailViewModel = viewModel(),
     onCocktailClick: (Drink) -> Unit
-
 ) {
     val state = viewModel.state.collectAsStateWithLifecycle()
     var searchText by remember { mutableStateOf("") }
@@ -79,15 +80,18 @@ fun MainScreen(
             is ApiState.Success -> {
                 LazyColumn {
                     items(result.drinks) { drink ->
+                        // Créer une entité CocktailEntity à partir du Drink
+                        val cocktailEntity = CocktailEntity(
+                            name = drink.strDrink,
+                            instructions = drink.strInstructions ?: "",
+                            createdAt = Date()
+                        )
+                        
                         CocktailItem(
-                            cocktail = CocktailEntity(
-                                name = drink.strDrink ?: "Sans nom",
-                                instructions = drink.strInstructions ?: "",
-                                createdAt = Date()
-                            ),
+                            cocktail = cocktailEntity,
                             imageUrl = drink.strDrinkThumb,
-                            onFavorite = {},
-                            onArchive = {},
+                            onFavorite = { cocktailViewModel.toggleFavorite(cocktailEntity) },
+                            onArchive = { cocktailViewModel.archiveCocktail(cocktailEntity.id) },
                             onClick = {
                                 onCocktailClick(drink)
                             }

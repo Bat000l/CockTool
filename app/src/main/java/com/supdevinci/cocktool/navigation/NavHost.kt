@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.supdevinci.cocktool.ui.composables.MainScreen
 import com.supdevinci.cocktool.ui.composables.MyCocktailsScreen
+import com.supdevinci.cocktool.ui.composables.MyFavoritesScreen
 import com.supdevinci.cocktool.ui.composables.RandomCocktailScreen
 import com.supdevinci.cocktool.ui.composables.SingleCocktailScreen
 import com.supdevinci.cocktool.model.Drink
@@ -14,6 +15,7 @@ import com.supdevinci.cocktool.ui.composables.SplashScreen
 object Routes {
     const val MAIN = "main"
     const val MYCOCKTAILS = "mycocktails"
+    const val MYFAVORITES = "myfavorites"
     const val RANDOM = "random"
     const val DETAIL = "detail"
     const val SPLASH = "splash"
@@ -49,6 +51,16 @@ fun CocktailNavHost(
             MyCocktailsScreen(
                 onCocktailClick = { name, instructions ->
                     onDrinkSelected(buildLocalDrink(name, instructions))
+                    navController.navigate(Routes.DETAIL)
+                }
+            )
+        }
+
+        // ⭐ FAVORIS
+        composable(Routes.MYFAVORITES) {
+            MyFavoritesScreen(
+                onCocktailClick = { cocktail ->
+                    onDrinkSelected(buildLocalDrink(cocktail.name, cocktail.instructions))
                     navController.navigate(Routes.DETAIL)
                 }
             )

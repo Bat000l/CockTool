@@ -23,4 +23,7 @@ interface CocktailDao {
 
     @Query("SELECT * FROM my_cocktails WHERE deletedAt IS NULL")
     fun getAllVisibleCocktails(): Flow<List<CocktailEntity>>
+
+    @Query("SELECT * FROM my_cocktails WHERE isFavorite = 1 AND deletedAt IS NULL")
+    fun getFavoriteCocktails(): Flow<List<CocktailEntity>>
 }
